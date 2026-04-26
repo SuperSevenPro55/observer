@@ -9,6 +9,7 @@ public class BarChatView implements ObserverInterface {
 
     BarChatView(Model model){
         this.model = model;
+        model.subscribe(this);
     }
 
     @Override
