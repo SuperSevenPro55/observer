@@ -6,11 +6,12 @@ import java.util.Locale;
 
 public class PieChartView implements ObserverInterface {
 
-    private Path path = Path.of("PieChartView.svg");
-    private Model model;
+    private final Path path = Path.of("PieChartView.svg");
+    private final Model model;
 
     PieChartView(Model model){
         this.model = model;
+        model.subscribe(this);
     }
     @Override
     public void update() {
@@ -36,6 +37,7 @@ public class PieChartView implements ObserverInterface {
         int cx = 100, cy = 100, r = 80;
         double currentAngle = 0;
         int[] values = {a, b, c};
+        String[] names = {"a","b","c"};
         String[] colors = {"red", "green", "blue"};
 
         StringBuilder sb = new StringBuilder();
@@ -63,6 +65,22 @@ public class PieChartView implements ObserverInterface {
                     cx, cy, x1, y1, r, r, largeArcFlag, x2, y2);
 
             sb.append(String.format("<path d='%s' fill='%s' />", pathData, colors[i]));
+
+
+            // Угол середины сектора (currentAngle - это угол, на котором мы закончили дугу)
+            double midAngle = currentAngle - (sliceAngle / 2.0);
+
+            // Радиус, на котором будет стоять текст (чуть меньше основного радиуса круга)
+            double labelRadius = r * 0.7;
+
+            // Координаты для текста
+            double tx = cx + labelRadius * Math.cos(Math.toRadians(midAngle));
+            double ty = cy + labelRadius * Math.sin(Math.toRadians(midAngle));
+
+            // Добавляем текст с выравниванием по центру
+            sb.append(String.format(java.util.Locale.US,
+                    "<text x='%.2f' y='%.2f' font-family='Arial' font-size='14' text-anchor='middle' dominant-baseline='central' fill='black'>%s</text>",
+                    tx, ty, names[i]));
         }
 
         sb.append("</svg>");

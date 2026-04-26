@@ -1,17 +1,11 @@
 public class Main {
     static void main(String[] args){
         Model model = new Model();
-        model.setA(10);
-        model.setB(10);
-        model.setC(10);
-        TableView obTV = new TableView(model);
-        obTV.update();
+        ObserverInterface pieChart = new PieChartView(model);
+        TableView tableView = new TableView(model);
+        BarChatView barChatView = new BarChatView(model);
 
-        BarChatView obBC = new BarChatView(model);
-        model.setA(5);
-        obBC.update();
-
-        PieChartView obPC = new PieChartView(model);
-        obPC.update();
+       model.unsubscribe(tableView);
+       model.setData(20,20,60);
     }
 }
