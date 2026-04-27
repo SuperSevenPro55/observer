@@ -6,6 +6,7 @@ target/
 *.svg
 .idea/
 .idea/misc.xml
+output/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

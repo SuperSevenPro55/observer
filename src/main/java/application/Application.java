@@ -23,7 +23,7 @@ public class Application {
         model.subscribe(tableView);
         model.subscribe(columnChart);
 
-        model.unsubscribe(tableView);
+        //model.unsubscribe(tableView);
 
         model.setData(Map.of(
                 "A", 20,
